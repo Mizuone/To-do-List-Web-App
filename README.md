@@ -9,5 +9,6 @@ Development Process:
 - #Create Delete function for items in list
 - #Create navigation for second list page
 - #Input Value's, transfer to list container
+- #Style
 - #Test, responsiveness
 - #Double Check
