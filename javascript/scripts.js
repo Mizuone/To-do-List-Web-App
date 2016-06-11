@@ -2,54 +2,40 @@ if (typeof(listSpace === "undefined")) {
     var listSpace = {};
 }
 (function() {
-    listSpace.createItem = function() {
-        //Captures mouse movement
-        document.onmousemove = mouseMove;
-        function mouseMove(e) {
-            e = e || window.event;
-            
-            var mousePos = mouseCoords(e);
-        };
-        function mouseCoords(e) {
-            if (e.pageX || e.pageY) {
-                return {x: e.pageX, y: e.pageY};
-            }
-            return { 
-                     x:ev.clientX + document.body.scrollLeft - document.body.clientLeft, 
-                     y:ev.clientY + document.body.scrollTop  - document.body.clientTop
-                   };
-        };
-        document.onmouseup = mouseUp;
-        var dragObject = null;
-        function makeClickable(object) {
-            object.onmousedown = function() {
-                dragObject = this;
-                console.log(object);
-            }
-        }
-        function mouseUp(e) {
-            dragObject = null;
-        }
-        
-        document.onmousemove = mouseMove;
-        document.onmouseup = mouseUp;
-        function getMouseOffset(target, e) {
-            e = e || window.event;
-            var docPos = getPosition(target);
-            var mousePos = mouseCoords(e);
-            return {x:mousePos.x - docPos.x, y:mousePos.y - docPos.y};
-        }
-        
-    };
     $(document).ready(function() {
         //adds input item to container
         $("#inputcreateitem").keyup(function(e) {
             var key = e.which;
             if (key === 13) {
                 var getValue = $("#inputcreateitem").val();
-                $(".createditems").append("<p class='createditem'>" + getValue + "</p>");
+                
+                $(".createditems").append("<p class='createditem'>" + getValue + "&nbsp&nbsp&nbsp&nbsp&nbsp" +
+                                          "<a href='#'><span class='glyphicon glyphicon-remove deleteitem'></span></a>" + 
+                                          "</p>");
+                    $(".container").droppable({
+                        accept: "p.createditem",
+                        hoverClass: "cell-highlght",
+                        tolerance: "pointer",
+                        drop: function(event, ui) {
+                            $(this).addClass("cell-dropped");
+                            $(ui.draggable).appendTo(this);
+                        }
+                    });
+                    $("p.createditem").draggable({
+                        opacity: 0.7,
+                        helper: 'clone',
+                        //appendTo: '#container',
+                        //helper: 'original',
+                        scroll: true
+                    });
+                $(document).on('click', 'a', function (e) {
+                    e.preventDefault();
+                    $(this).parent().remove();
+                });
+                $("#inputcreateitem").val("");
             }
         });
+        
     });
-    listSpace.createItem();
+   // listSpace.createItem();
 })();
