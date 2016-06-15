@@ -23,7 +23,6 @@ if (typeof(listSpace === "undefined")) {
                 tasks.push(getValue);
                 i++;
                 localStorage.setItem(taskID, getValue);
-                
             }
         });
         listSpace.addDragAndDrop = function() {
@@ -49,8 +48,8 @@ if (typeof(listSpace === "undefined")) {
                     });
                 });
         }
-        for(var i=0; i < localStorage.length; i++) {
-            var taskID = "task-" + i;
+        for(var i = 0; i < localStorage.length; i++) {
+            var taskID = localStorage.key(i);
             $(".createditems").append("<p class='createditem' id='" + taskID + "'>" +  localStorage.getItem(taskID)  + "&nbsp&nbsp&nbsp&nbsp&nbsp" +
                                     "<a href='#'><span class='glyphicon glyphicon-remove deleteitem'></span></a>" + 
                                     "</p>");
