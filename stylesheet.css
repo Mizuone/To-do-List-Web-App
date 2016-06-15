@@ -40,6 +40,8 @@ p {
 .container {
     border: 0.1em solid black;
     width: 35%;
+    background-color: rgba(0,0,0,0.9);
+    box-shadow: 0 0 1px 1px black;
 }
 .container p {
     text-align: left;
@@ -47,22 +49,35 @@ p {
 .glyphicon glyphicon-remove {
     float: right;
 }
-.createditem {
+p.createditem {
     cursor: pointer;
+    padding: 0.5em;
+    border-radius: 1em;
+}
+p.createditem {
+    background-color: rgba(12, 242, 245, 0.5);
+    color: white;
 }
 .edit-item-content, .to-do-list-content {
     height: 1em;
-    border-bottom: black 0.1em solid;
+    border-bottom: white 0.1em solid;
 }
 p.createditem a {
     text-decoration: none;
     color: black;
+    background-color: rgb(35, 134, 136);
 }
-p.createditem span:link {
+p.createditem a:link {
     background-color: white;
 }
-p.createditem span:hover {
-    color: deepskyblue;
+p.createditem a:hover {
+    color: crimson;
+    
+}
+input[type=text], input[type=text]:focus {
+    background-color: black;
+    color: white;
+    border: 3px solid #555;
 }
 @media screen and (max-width: 1000px) {
     .container {
