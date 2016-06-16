@@ -12,7 +12,7 @@ if (typeof(listSpace === "undefined")) {
         var i = 0;
         $("#inputcreateitem").keyup(function(e) {
             var key = e.which;
-            if (key === 13) {
+            if (key === 13 && $("#inputcreateitem").val() !== " ") {
                 var getValue = $("#inputcreateitem").val();
                 var taskID = "task-" + i;
                 $(".createditems").append("<p class='createditem' id='" + taskID + "'>" + "<span>" + getValue + "</span>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" +
@@ -50,7 +50,7 @@ if (typeof(listSpace === "undefined")) {
         }
         for(var i = 0; i < localStorage.length; i++) {
             var taskID = localStorage.key(i);
-            $(".createditems").append("<p class='createditem' id='" + taskID + "'>" +  localStorage.getItem(taskID)  + "&nbsp&nbsp&nbsp&nbsp&nbsp" +
+            $(".createditems").append("<p class='createditem' id='" + taskID + "'>" + "<span>" + localStorage.getItem(taskID) + "</span>"  + "&nbsp&nbsp&nbsp&nbsp&nbsp" +
                                     "<a href='#'><span class='glyphicon glyphicon-remove deleteitem'></span></a>" + 
                                     "</p>");
             listSpace.addDragAndDrop();
