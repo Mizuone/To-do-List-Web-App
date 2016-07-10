@@ -9,52 +9,60 @@ if (typeof(listSpace === "undefined")) {
     }
     $(document).ready(function() {
         //adds input item to container
-        var i = 0;
-        $("#inputcreateitem").keyup(function(e) {
-            var key = e.which;
-            if (key === 13 && $("#inputcreateitem").val() !== " ") {
-                var getValue = $("#inputcreateitem").val();
-                var taskID = "task-" + i;
-                $(".createditems").append("<p class='createditem' id='" + taskID + "'>" + "<span>" + getValue + "</span>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" +
-                                          "<a href='#'><span class='glyphicon glyphicon-remove deleteitem'></span></a>" + 
-                                          "</p>");
-                 listSpace.addDragAndDrop();
-                $("#inputcreateitem").val("");
-                tasks.push(getValue);
-                i++;
-                localStorage.setItem(taskID, getValue);
+        listSpace = function() {
+            var i = 0;
+            
+            function createItem(id, value) {
+                $(".createditems").append("<p class='createditem' id='" + id + "'>" + "<span>" + value + "</span>"  + "&nbsp&nbsp&nbsp&nbsp&nbsp" +
+                                        "<a href='#'><span class='glyphicon glyphicon-remove deleteitem'></span></a>" + 
+                                        "</p>");
             }
-        });
-        listSpace.addDragAndDrop = function() {
-         $(".container").droppable({
-                        accept: "p.createditem",
-                        tolerance: "pointer",
-                        drop: function(event, ui) {
-                            $(this).addClass("cell-dropped");
-                            $(ui.draggable).appendTo(this);
-                        }
+            
+            $("#inputcreateitem").keyup(function(e) {
+                var key = e.which;
+                if (key === 13 && $("#inputcreateitem").val() !== " ") {
+                    var getValue = $("#inputcreateitem").val();
+                    var taskID = "task-" + i;
+                    createItem(taskID, getValue);
+
+                    listSpace.addDragAndDrop();
+                    $("#inputcreateitem").val("");
+                    tasks.push(getValue);
+                    i++;
+                    localStorage.setItem(taskID, getValue);
+                }
+            });
+            listSpace.addDragAndDrop = function() {
+             $(".container").droppable({
+                            accept: "p.createditem",
+                            tolerance: "pointer",
+                            drop: function(event, ui) {
+                                $(this).addClass("cell-dropped");
+                                $(ui.draggable).appendTo(this);
+                            }
+                        });
+                        $("p.createditem").draggable({
+                            opacity: 0.7,
+                            helper: 'clone',
+                            scroll: true
+                        });
+                    $(".createditems ,.container").on('mouseover', 'p', function (e) {
+                        self = $(this);
+                        taskID = self.attr('id');
+                        $(".createditems , .container").on('click', 'a', function (e) {
+                            $("#" + taskID).remove();
+                            localStorage.removeItem(taskID);
+                        });
                     });
-                    $("p.createditem").draggable({
-                        opacity: 0.7,
-                        helper: 'clone',
-                        scroll: true
-                    });
-                $(".createditems ,.container").on('mouseover', 'p', function (e) {
-                    self = $(this);
-                    taskID = self.attr('id');
-                    $(".createditems , .container").on('click', 'a', function (e) {
-                        $("#" + taskID).remove();
-                        localStorage.removeItem(taskID);
-                    });
-                });
+            }
+            for(var i = 0; i < localStorage.length; i++) {
+                var taskID = localStorage.key(i);
+                createItem(taskID, localStorage.getItem(taskID));
+
+                listSpace.addDragAndDrop();
+            }
         }
-        for(var i = 0; i < localStorage.length; i++) {
-            var taskID = localStorage.key(i);
-            $(".createditems").append("<p class='createditem' id='" + taskID + "'>" + "<span>" + localStorage.getItem(taskID) + "</span>"  + "&nbsp&nbsp&nbsp&nbsp&nbsp" +
-                                    "<a href='#'><span class='glyphicon glyphicon-remove deleteitem'></span></a>" + 
-                                    "</p>");
-            listSpace.addDragAndDrop();
-        }
+        listSpace();
     });
     //window.localStorage.clear();
 })();
