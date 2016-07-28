@@ -68,11 +68,18 @@ p.createditem a {
     background-color: rgb(35, 134, 136);
 }
 p.createditem a:link {
-    background-color: white;
+    background-color: rgb(35, 134, 136);
+}
+p.createditem a:visited {
+    background-color: rgb(35, 134, 136);
 }
 p.createditem a:hover {
     color: crimson;
     
+}
+.navbar-brand {
+    padding: 5px;
+    margin: 5px;
 }
 input[type=text], input[type=text]:focus {
     background-color: black;
